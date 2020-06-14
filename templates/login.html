@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        function func() {
+            var array = $(form).serializeArray();
+            var final_data = {
+                "username": array[0]['value'],
+                "password": array[1]['value'],
+            };
+            return JSON.stringify(final_data);
+        }
+
+        function login() {
+            $.ajax({
+                url: "/api/login/",
+                type: "POST",
+                data: func(),
+                dataType: "json",
+                headers: {
+                    "X-CSRFToken": '{{ csrf_token }}',
+                    "content-type": "application/json",
+                },
+                success: function (data) {
+                    window.location = "/home/";
+                },
+                error: function (xhr, status) {
+                    alert("Oops! Something went wrong.\nPlease check credentials");
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1 style="font-weight: bold">Login Page</h1>
+        <br>
+
+        <form id="form1" action="/api/login/" method="post">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="username" placeholder="Username" name="username">
+                    <br>
+                    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                    <br>
+
+                    <input type="submit" class="btn btn-success" value="Login" form="orbit-form" onclick="login()">
+                </div>
+                <p>To Signup. Click
+                <a href="/signup/">here.</a>
+                </p>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        var form = document.querySelector('form');
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+        })
+    </script>
+</body>
+
+</html>

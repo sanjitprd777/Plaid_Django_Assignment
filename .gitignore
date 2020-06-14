@@ -1,0 +1,13 @@
+venv
+.idea
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+.vscode/
+cloud_sql_proxy
+dump.rdb
+static/admin/
+static/rest_framework/
+env

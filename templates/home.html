@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://threads.plaid.com/threads.css">
+    <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Dashboard</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="{% url "link" %}">Link Bank</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{ user }}</a></li>
+            <li><a href="#" onclick="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+{% if have_access_token %}
+    <!--Transactions -->
+    <div class="item-data-row">
+        <div class="item-data-row__left">
+            <div class="item-data-row__request-type">post</div>
+        </div>
+        <div class="item-data-row__center">
+            <div class="item-data-row__nicename">Transactions</div>
+            <div class="item-data-row__endpoint">/transactions/get</div>
+            <div class="item-data-row__description">Retrieve transactions for credit and depository accounts.</div>
+        </div>
+        <div class="item-data-row__right">
+            <button href="#transactions"
+                    class="button button--is-small button--is-default button--is-full-width" data-toggle="collapse">Get Transactions</button>
+        </div>
+        <div class="item-data-row__response">
+            <table>
+                <tbody id="transactions" class="collapse">
+                <tr><td><strong>Name</strong></td><td><strong>Amount</strong></td><td><strong>Date</strong></td></tr>
+                {% for txn in transactions %}
+                    <tr>
+                        <td> {{txn.name  }}</td>
+                        <td>{{txn.amount}} </td>
+                        <td>{{ txn.date }} </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="box">
+        <h3 class="box__heading">Fetches Data via API Call</h3>
+        <!-- Balance -->
+        <div class="item-data-row">
+            <div class="item-data-row__left">
+                <div class="item-data-row__request-type">post</div>
+            </div>
+            <div class="item-data-row__center">
+                <div class="item-data-row__nicename">Balance</div>
+                <div class="item-data-row__endpoint">/accounts/balance/get</div>
+                <div class="item-data-row__description">Check balances in real time to prevent non-sufficient funds
+                    fees.</div>
+            </div>
+            <div class="item-data-row__right">
+                <button id="get-balance-btn"
+                        class="button button--is-small button--is-default button--is-full-width">Get Balance</button>
+            </div>
+            <div class="item-data-row__response">
+                <table>
+                    <tbody id="get-balance-data"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="item-data-row">
+            <div class="item-data-row__left">
+                <div class="item-data-row__request-type">post</div>
+            </div>
+            <div class="item-data-row__center">
+                <div class="item-data-row__endpoint">/item/get</div>
+                <div class="item-data-row__description">Retrieve information about an Item, like the institution, billed
+                    products, available products, and webhook information.</div>
+            </div>
+
+            <div class="item-data-row__right">
+                <button id="get-item-btn" class="button button--is-small button--is-default button--is-full-width">Get
+                    Item Info</button>
+            </div>
+
+            <div class="item-data-row__response">
+                <table>
+                    <tbody id="get-item-data"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="item-data-row">
+            <div class="item-data-row__left">
+                <div class="item-data-row__request-type">post</div>
+            </div>
+            <div class="item-data-row__center">
+                <div class="item-data-row__endpoint">/accounts/get</div>
+                <div class="item-data-row__description">Retrieve high-level information about all accounts associated
+                    with an Item.</div>
+            </div>
+
+            <div class="item-data-row__right">
+                <button id="get-accounts-btn"
+                        class="button button--is-small button--is-default button--is-full-width">Get Account Info</button>
+            </div>
+
+            <div class="item-data-row__response">
+                <table>
+                    <tbody id="get-accounts-data"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <h1> Please Link Bank Account first. Click
+    <a href="/link/">here.</a>
+    <h1>
+{% endif %}
+
+</div>
+
+<script>
+    function logout() {
+        $.ajax({
+            url: "/api/logout/",
+            type: "POST",
+            //data: func(),
+            dataType: "json",
+            headers: {
+                "X-CSRFToken": '{{ csrf_token }}',
+                "content-type": "application/json",
+            },
+            success: function (data) {
+                window.location = "/login/";
+            },
+            error: function (xhr, status) {
+                alert("Oops! Something went wrong.\nTry Again");
+            }
+        });
+    }
+
+</script>
+{% load static %}
+<script src="{% static "script.js" %}"></script>
+</body>
+
+</html>
