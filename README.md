@@ -59,7 +59,7 @@
 
 Clone the project on your system:
 
-    $ git clone https://github.com/iamabhishek0/plaid_django.git
+    $ git clone https://github.com/Sanjit-Prasad/DjangoAssignment.git
     $ cd plaid_django
 
 ## Setting Database
