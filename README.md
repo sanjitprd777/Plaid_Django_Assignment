@@ -165,7 +165,7 @@ Migrate the changes for celery results:
 
 Now start the worker process:
 
-    $ celery -A DjangoAssignment worker -l info
+    $ celery -A plaid_django worker -l info
 
 Now celery worker is running in background. You can call the tasks asynchronously. You can test this by running test_celery() in django shell::
 
@@ -210,5 +210,5 @@ Above were the steps for setting up first time. In case you already had set up t
     $ ./ngrok http -host-header=localhost 8000
     $ redis-server
     $ source ./env/bin/activate
-    $ celery -A DjangoAssignment worker -l info
+    $ celery -A plaid_django worker -l info
     $ python manage.py runserver
