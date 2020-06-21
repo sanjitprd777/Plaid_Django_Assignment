@@ -42,7 +42,7 @@
 
 # Setting Up the project with Plaid and Django Rest Framework
 
-# Plaid Django
+# Django Assignment
 
 [Plaid](https://plaid.com/docs/)​ is an account aggregation service where users can login with their bank credentials and plaid fetches last two years of transaction and account balance data for their bank account. This project is its implementation using Django.
 
@@ -60,7 +60,7 @@
 Clone the project on your system:
 
     $ git clone https://github.com/Sanjit-Prasad/DjangoAssignment.git
-    $ cd plaid_django
+    $ cd DjangoAssignment
 
 ## Setting Database
 
@@ -165,7 +165,7 @@ Migrate the changes for celery results:
 
 Now start the worker process:
 
-    $ celery -A plaid_django worker -l info
+    $ celery -A DjangoAssignment worker -l info
 
 Now celery worker is running in background. You can call the tasks asynchronously. You can test this by running test_celery() in django shell::
 
@@ -210,5 +210,5 @@ Above were the steps for setting up first time. In case you already had set up t
     $ ./ngrok http -host-header=localhost 8000
     $ redis-server
     $ source ./env/bin/activate
-    $ celery -A plaid_django worker -l info
+    $ celery -A DjangoAssignment worker -l info
     $ python manage.py runserver
