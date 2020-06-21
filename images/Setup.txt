@@ -1,0 +1,42 @@
+How to setup project running.
+
+1. Run 'redis-server'
+2. Run 'source env/bin/activate' to initiate the environment in project directory. Then run 'python manage.py runserver' to start the server.
+3. Run 'source env/bin/activate' to initiate the environment in project directory. Then run 'celery -A plaid_django worker -l info' to start the celery.
+
+How to create a user.
+
+1. Signup to create user 'localhost:8080/signup'
+2. Login via 'localhost:8080/login'
+
+How to link a bank account via Plaid
+
+1. Click on 'Click here' to link the bank.
+2. Select bank and put 'username' = user_good and password = 'pass_good'.
+Now see the results in celery which fetches the transaction and save it on out sqlite db.
+
+How to start running ngrok
+1. open terminal in desktop and run following commands
+	cd Desktop
+	./ngrok http -host-header=localhost 8000
+
+How to start running Webhook.
+
+1. Run 'source env/bin/activate' to initiate the environment in project directory. Then run 'python3' to start python env.
+2. now import these
+	import plaid
+	import os
+3.  now copy everything from plaid_link/keys.py and paste in python terminal.
+4. Now run the following commands
+
+x = plaid.api.item.Webhook(client)
+
+act = 'access-sandbox-a6003cca-c87e-4515-958d-7e11efcf2821'  # here we take the access token for the current login user from 'localhost:8080/admin/item' 
+
+x.update(act,"http://df612d46026e.ngrok.io/api/webhook/") # here we put our ngrok url to make out localhost link with a public domain to fetch the results and store in db.
+
+d = "DEFAULT_UPDATE"
+
+y.item.fire_webhook(act,d) # Again see in the ngrok that we made a post req, also if we got some data we can see it coming on our celery.
+
+VOILA you are done :)
