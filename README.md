@@ -1,3 +1,47 @@
+# Images for better Visualization of project
+
+**Signup Page**
+
+![](images/Signup.png)
+
+**Login Page**
+
+![](images/Login.png)
+
+**HomePage**
+
+![](images/Home.png)
+
+**Select Bank**
+
+![](images/SelectBank.png)
+
+**Verify Bank Details**
+
+![](images/VerifyDetails.png)
+
+**Bank Added Successfully**
+
+![](images/BankSuccess.png)
+
+**HomePage When Bank Added**
+
+![](images/HomeWhenBankAdded.png)
+
+**Last 2 Years Transaction**
+
+![](images/TransactionsOf2Years.png)
+
+**Account Balance Info**
+
+![](images/AccountBalance.png)
+
+**Other Infos**
+
+![](images/OtherInfos.png)
+
+# Setting Up the project with Plaid and Django Rest Framework
+
 # Plaid Django
 
 [Plaid](https://plaid.com/docs/)​ is an account aggregation service where users can login with their bank credentials and plaid fetches last two years of transaction and account balance data for their bank account. This project is its implementation using Django.
